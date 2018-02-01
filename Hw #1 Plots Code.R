@@ -51,7 +51,6 @@ c<- 1/((12.5^40)*exp(-2.5*12.5))
 curve(c*((x^40)*exp(-2.5*x)), from=1, to=30,col="dodgerblue1", lwd=2, 
       xlab="lambda", ylab="likelihood", main="Plot of Evidence about Poisson Size Index (X4 and X5 Truncated)")
 
-
 ### QUESTION 3A --------------------------------------------------------------
 
 #Exponential likelihood plot (unscaled)
@@ -60,16 +59,16 @@ curve((1/x^7)*exp(-41.5/x), from=1, to=30,col="dodgerblue1", lwd=2, xlab="x", yl
 #Find absolute maximum in likelihood function
 y <- function(x) { (1/x^7)*exp(-41.5/x) }
 opt <- optimize(y, interval=c(0,30), maximum=TRUE) #Shows highest likelihood occurs at mu=5.928574
-xmax <- max$maximum
+xmax <- opt$maximum
 
-#Calculate scaling factor
+#Calculate scaling factor "c"
 c<- 1/((1/xmax^7)*exp(-41.5/xmax))
 
 #New scaled plot
 curve(c*((1/x^7)*exp(-41.5/x)), from=1, to=30,col="dodgerblue1", lwd=2, 
       xlab="mu", ylab="likelihood", main="3A: Plot of Evidence about Exponential Size Index")
 
-### QUESTION 3B --------------------------------------------------------------
+### QUESTION 3B (INTERVAL CENSORING) -----------------------------------------
 
 #Input function
 y <- function(x) { (-exp(-4/x)+exp(-3/x))*(-exp(-9/x)+exp(-8/x))*(-exp(-3/x)+exp(-2/x))*(-exp(-11/x)+exp(-10/x))*(-exp(-3/x)+exp(-1/x))*(-exp(-5/x)+exp(-4/x))*(-exp(-11/x)+exp(-10/x))}
@@ -77,7 +76,7 @@ y <- function(x) { (-exp(-4/x)+exp(-3/x))*(-exp(-9/x)+exp(-8/x))*(-exp(-3/x)+exp
 #Unscaled Plot
 curve(y, from=1, to=30, col="dodgerblue1", lwd=2, xlab="x", ylab="y")
 
-#Find maximum and rewrite likelihood function with 
+#Find maximum likelihood and rewrite likelihood function with scaling factor 
 opt <- optimize(y, interval=c(0,30), maximum=TRUE) 
 x <- opt$maximum
 c <- 1/( (-exp(-4/x)+exp(-3/x))*(-exp(-9/x)+exp(-8/x))*(-exp(-3/x)+exp(-2/x))*(-exp(-11/x)+exp(-10/x))*(-exp(-3/x)+exp(-1/x))*(-exp(-5/x)+exp(-4/x))*(-exp(-11/x)+exp(-10/x)) )
@@ -85,9 +84,9 @@ y <- function(x) { c*(-exp(-4/x)+exp(-3/x))*(-exp(-9/x)+exp(-8/x))*(-exp(-3/x)+e
 
 #Scaled plot
 curve(y, from=1, to=30,col="dodgerblue1", lwd=2, 
-      xlab="mu", ylab="likelihood", main="3B: Plot of Evidence about Exponential Size Index")
+      xlab="mu", ylab="likelihood", main="3B: Plot of Evidence about Exponential Size Index with Interval Censoring")
 
-### QUESTION 3C --------------------------------------------------------------
+### QUESTION 3C (RIGHT CENSORING) --------------------------------------------------
 
 #Input function
 y <- function(x) { (-exp(-4/x)+exp(-3/x))*(-exp(-9/x)+exp(-8/x))*(-exp(-3/x)+exp(-2/x))*(exp(-10/x))*(-exp(-3/x)+exp(-1/x))*(-exp(-5/x)+exp(-4/x))*(exp(-10/x))}
@@ -95,7 +94,7 @@ y <- function(x) { (-exp(-4/x)+exp(-3/x))*(-exp(-9/x)+exp(-8/x))*(-exp(-3/x)+exp
 #Unscaled Plot
 curve(y, from=1, to=30, col="dodgerblue1", lwd=2, xlab="x", ylab="y")
 
-#Find maximum and rewrite likelihood function with 
+#Find maximum likelihood and rewrite likelihood function with scaling factor
 opt <- optimize(y, interval=c(0,30), maximum=TRUE) 
 x <- opt$maximum
 c <- 1/( (-exp(-4/x)+exp(-3/x))*(-exp(-9/x)+exp(-8/x))*(-exp(-3/x)+exp(-2/x))*(exp(-10/x))*(-exp(-3/x)+exp(-1/x))*(-exp(-5/x)+exp(-4/x))*(exp(-10/x)) )
@@ -103,4 +102,4 @@ y <- function(x) { c*(-exp(-4/x)+exp(-3/x))*(-exp(-9/x)+exp(-8/x))*(-exp(-3/x)+e
 
 #Scaled plot
 curve(y, from=1, to=30,col="dodgerblue1", lwd=2, 
-      xlab="mu", ylab="likelihood", main="3C: Plot of Evidence about Exponential Size Index")
+      xlab="mu", ylab="likelihood", main="3C: Plot of Evidence about Exponential Size Index with Right Censoring")
